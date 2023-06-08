@@ -55,8 +55,6 @@ function find_container {
 
     container_id=$(docker ps --format "{{.ID}} {{.Names}}" | grep "webserver" | awk '{print $1}')
 
-    echo $container_id
-
     if [ ! -n "${container_id}" ]
 	then
 		echo "No running docker container found, please start spin up an environment"
@@ -79,9 +77,9 @@ function show_file {
         exit 1
 	fi
 
-    details=$(cat "${local_path}" | grep "${ALERT_ID}" | jq .)
+    details=$(grep "${ALERT_ID}" "${local_path}" | jq .)
 
-    echo "Alert details"
+    echo "Alert details:"
     echo "${details}"
 
 }
